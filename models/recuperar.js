@@ -1,13 +1,13 @@
 import { supabase } from "../config/supabase.js";
 
 //crear codigo de recuperacion 
-export const crearCodigoRecuperacion = async (obtenerUsuarioPorId, codigo) => {
+export const crearCodigoRecuperacion = async (usuarioId, codigo) => {
     const expiresAt = new Date (Date.now()+15 * 60 * 1000); //expira en 15 minutos
 
     const {data, error }= await supabase
     .from ('recovery_codes')
     .insert({
-        usuario_id: usuario_Id,
+        usuario_id: usuarioId,
         codigo: codigo,
         expires_at : expiresAt.toISOString()
 
