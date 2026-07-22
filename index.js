@@ -11,7 +11,7 @@ import pedidoRoutes from './routes/pedidos.js';
 
 //cargar variable de entorno 
 dotenv.config();
-conectarDB();
+
 
 //creamos la aplicacion de express
 const app = express();
@@ -30,7 +30,9 @@ app.get('/', (req, res) => {
 //ruta de autenticacion 
 app.use('/auth', authRoutes);
 app.use('/usuarios', userRoutes);
-app.use('/helados',  heladoRoutes);
+//ruta de helados
+app.use('/api',  heladoRoutes);
+//ruta de pedidos
 app.use('/pedidos', pedidoRoutes);
 // configuramos el puerto
 const PORT = 3000;

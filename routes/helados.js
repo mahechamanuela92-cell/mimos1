@@ -4,6 +4,8 @@ import express from 'express';
 import { listarHelados, obtenerHelado, obtenerPorCat, crear, editar, eliminar } from
 '../controllers/heladoController.js';
 
+import { verificarToken, verificarAdmin } from '../middlewares/authmiddlewares.js';
+
 // Inicializa el enrutador de Express para agrupar y definir las rutas de la aplicación
 const router = express.Router();
 
@@ -21,15 +23,16 @@ router.get('/helados/categoria/:categoria', obtenerPorCat);
 
 // // POST - Crear helado
 // Define una ruta HTTP POST que sirve para enviar información en el cuerpo de la petición y dar de alta un nuevo helado
-router.post('/crear', crear);
+router.post('/helados', verificarToken, verificarAdmin, crear);
+
 
 // // PUT - Actualizar helado
 // Define una ruta HTTP PUT que utiliza el ':id' del helado para identificarlo y modificar o reemplazar sus datos actuales
-router.put('/actualizar/:id', editar);
+router.put('/helados/:id', verificarToken, verificarAdmin, editar);
 
 // // DELETE - Eliminar helado
 // Define una ruta HTTP DELETE que utiliza el ':id' para localizar un helado específico y removerlo permanentemente de la base de datos
-router.delete('/eliminar/:id', eliminar);
+router.delete('/eliminar/:id', verificarToken, verificarAdmin, eliminar);
 
 // Exporta el enrutador configurado para que pueda ser importado e integrado en el archivo principal de la aplicación (como app.js o index.js)
 export default router;

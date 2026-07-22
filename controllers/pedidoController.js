@@ -18,7 +18,7 @@ export const crearPedidoConDetalles = async (req, res) => {
         });
 
         // 1. Crear pedido
-        const { data: pedido, error: errorPedido } = await crearPedido({
+        const { data: pedido, error: errorPedido } = await crearPedido({ 
             usuario_id, direccion_entrega, telefono, notas, total
         });
 
@@ -75,6 +75,29 @@ export const misPedidos = async (req, res) => {
         if (!usuario_id) return res.status(400).json({ error: 'usuario_id requerido' });
         const { data, error } = await obtenerPedidosPorUsuario(usuario_id);
         if (error) return res.status(500).json({ error: 'Error al obtener pedidos' });
+        return res.status(200).json(data);
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+};
+
+export const actualizarEstado = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { estado } = req.body;
+        const { data, error } = await modificarEstadoPedido(id, estado);
+        if (error) return res.status(500).json({ error: 'Error al actualizar estado' });
+        return res.status(200).json(data);
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+};
+
+export const eliminarPedido = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { data, error } = await borrarPedido(id);
+        if (error) return res.status(500).json({ error: 'Error al eliminar pedido' });
         return res.status(200).json(data);
     } catch (error) {
         return res.status(500).json({ error: error.message });

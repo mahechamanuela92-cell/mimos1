@@ -21,10 +21,11 @@ export const obtenerPorCategoria = async (categoria) => {
 };
 
 // Sirve para insertar (guardar) un nuevo helado en la base de datos con los datos recibidos en 'heladoData'
-export const crearHelado = async (heladoData) => {
-    const { data, error } = await supabase
-        .from('helados').insert(heladoData).select();
-    return { data, error };
+export const crearHelado = async (datos) => {
+    return await supabase
+        .from('helados')
+        .insert([datos])
+        .select(); // 👈 OBLIGATORIO para que devuelva la fila insertada en 'data'
 };
 
 // Sirve para modificar o actualizar los datos de un helado existente buscando por su 'id'
